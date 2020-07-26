@@ -1,0 +1,40 @@
+---
+# App specific
+dp3t:
+  ibcovid:
+    codegen:
+      clients:
+        auth: "http://localhost:10103/v1"
+      private-key: "classpath:/cert/private.key"
+      public-key: "classpath:/cert/public.key"
+      # Expiration duration in hours
+      expiration-duration: 24
+      tasks:
+        delete-exposed-access-codes:
+          cron: "0 */30 * ? * *"
+
+spring:
+  main:
+    banner-mode: off
+  profiles:
+    active: @activeSpringProfiles@
+  jpa:
+    # Hibernate
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    open-in-view: false
+
+  # Database migration
+  flyway:
+    enabled: @enableDBMigration@
+    baseline-on-migrate: true
+    table: "flyway_history_codegen"
+    locations: "classpath:db/migration/@databaseDialect@"
+
+logging:
+  config: "classpath:log4j2-@activeEnvironment@.yml"

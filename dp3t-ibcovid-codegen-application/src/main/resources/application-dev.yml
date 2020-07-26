@@ -1,0 +1,35 @@
+---
+# App specific
+dp3t:
+  ibcovid:
+    codegen:
+      clients:
+        auth: "http://localhost:10103/v1"
+      # Expiration duration in hours
+      expiration-duration: 60
+      tasks:
+        delete-exposed-access-codes:
+          cron: "0 */30 * ? * *"
+
+# Server settings
+server:
+  port: 10102
+
+spring:
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  # Database
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: "sa"
+    password: ""
+
+# Logging
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.SQL.type.descriptor.sql: TRACE
+    es.caib.dp3t.ibcovid: DEBUG
