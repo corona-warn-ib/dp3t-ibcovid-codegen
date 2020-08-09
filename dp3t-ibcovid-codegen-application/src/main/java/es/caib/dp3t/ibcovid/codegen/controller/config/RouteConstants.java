@@ -15,6 +15,7 @@ public final class RouteConstants {
 
     public static final String CODE_GEN_BASE_PATH = BASE_PATH;
     public static final String CODE_GEN_ADMIN_BASE_PATH = ADMIN_PATH + "/access-code";
+    public static final String DOWNLOADED_CODE_ADMIN_BASE_PATH = ADMIN_PATH + "/downloaded-access-code";
 
     // Web page routes
     public static final String WEB_APP_PATH = BASE_PATH + "/web";

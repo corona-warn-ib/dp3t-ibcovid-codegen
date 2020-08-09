@@ -18,9 +18,10 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
   # Database
   datasource:
-    url: jdbc:mariadb://mydev.plexus.local/dpppt_ib
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: "jorge.garciamartinez"
+    url: jdbc:postgresql://localhost:5432/dpppt
+    driver-class-name: org.postgresql.ds.PGSimpleDataSource
+    username: "postgres"
+    password: "root"
 
 # Logging
 logging:

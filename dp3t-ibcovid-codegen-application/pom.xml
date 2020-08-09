@@ -105,13 +105,12 @@
                 <activeEnvironment>pre</activeEnvironment>
                 <activeSpringProfiles>pre</activeSpringProfiles>
                 <enableDBMigration>true</enableDBMigration>
-                <databaseDialect>mariadb</databaseDialect>
+                <databaseDialect>postgres</databaseDialect>
             </properties>
             <dependencies>
                 <dependency>
-                    <groupId>org.mariadb.jdbc</groupId>
-                    <artifactId>mariadb-java-client</artifactId>
-                    <version>${mariadb.version}</version>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
                 </dependency>
             </dependencies>
         </profile>
@@ -137,13 +136,12 @@
                 <activeEnvironment>pro</activeEnvironment>
                 <activeSpringProfiles>pro</activeSpringProfiles>
                 <enableDBMigration>true</enableDBMigration>
-                <databaseDialect>mariadb</databaseDialect>
+                <databaseDialect>postgres</databaseDialect>
             </properties>
             <dependencies>
                 <dependency>
-                    <groupId>org.mariadb.jdbc</groupId>
-                    <artifactId>mariadb-java-client</artifactId>
-                    <version>${mariadb.version}</version>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
                 </dependency>
             </dependencies>
         </profile>
