@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
   # Database
   datasource:
-    url: jdbc:postgresql://localhost:5432/dpppt
+    url: jdbc:postgresql://localhost:5433/dpppt
     driver-class-name: org.postgresql.ds.PGSimpleDataSource
     username: "postgres"
     password: "root"

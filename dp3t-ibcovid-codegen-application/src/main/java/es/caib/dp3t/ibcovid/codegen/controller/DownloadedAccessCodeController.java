@@ -8,9 +8,12 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = RouteConstants.DOWNLOADED_CODE_ADMIN_BASE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -33,6 +36,17 @@ public class DownloadedAccessCodeController {
             return ResponseEntity.ok(code);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/generate-codes")
+    @Scheduled(cron = "${dp3t.ibcovid.codegen.tasks.delete-exposed-access-codes.cron}")
+    public void executeGenerateCodes(){
+        log.info("Inicia el proceso de Generacion de Codigos");
+        final List<DownloadedAccessCodeSrvDto> downloadedAccessCodeList = this.downloadedAccessCodeService.getDownloadedAccessCodeList();
+        if(!downloadedAccessCodeList.isEmpty()){
+            downloadedAccessCodeService.generateCodes();
+        }
+        log.info("Finaliza el proceso de Generacion de Codigos");
     }
 
 }

@@ -37,4 +37,26 @@ spring:
     locations: "classpath:db/migration/@databaseDialect@"
 
 logging:
-  config: "classpath:log4j2-@activeEnvironment@.yml"
+  config: classpath:log4j2-@activeEnvironment@.yml
+
+jwt:
+    PRIVATE_KEY_FILE: "classpath://generated_private_base64.pem"
+    ALGORITHM: "EC"
+    CCAA_SUBJECT: "04"
+    CCAA_ISSUER: "ISSUER"
+    TOKEN_MINS_EXPIRES: 15
+
+application:
+  radarcovid:
+    size: 500
+    url: "https://ddu362ufohvxt.cloudfront.net/verification/generate"
+    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0NCk1JR2JNQkFHQnlxR1NNNDlBZ0VH
+      QlN1QkJBQWpBNEdHQUFRQlNZeXF2UkFBWVRjOHZjY25XN3QzWmRPUEZKbDQNCms4
+      UU1McGRkWENqSFFYRjUwQkMva0xvZVZpNXdvWHh6dkNFR2JUSjdEZXNjdlFLUUZB
+      dVpmQ2Y0MGdVQXhZbWsNClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJw
+      blV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHANClJLK1FkdThoRzFBNDVH
+      UDAvbEk9DQotLS0tLUVORCBQVUJMSUMgS0VZLS0tLS0NCg=="
+
+cron:
+  generate:
+    frecuency: "0/30 * * * * ?"
