@@ -18,17 +18,20 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class TokenService {
 
     private static final String PRIVATE_KEY_FILE = "classpath://generated_private_base64.pem";
     private static final String ALGORITHM = "EC";
-    private static final String CCAA_SUBJECT = "00";
+    private static final String CCAA_SUBJECT = "04";
     private static final String CCAA_ISSUER = "ISSUER";
     private static final int TOKEN_MINS_EXPIRES = 15;
 
@@ -42,19 +45,19 @@ public class TokenService {
 
     private String run() throws Exception {
 
-//        // Load BouncyCastle as JCA provider
-//        Security.addProvider(new BouncyCastleProvider());
-//
-//        // Parse the EC key pair
-//        PEMParser pemParser = new PEMParser(new InputStreamReader(new FileInputStream("ec512-key-pair.pem")));
-//        PEMKeyPair pemKeyPair = (PEMKeyPair)pemParser.readObject();
-
         String strPrivateKey = getBase64Key(loadKey(PRIVATE_KEY_FILE));
         ECPrivateKey privateKey = (ECPrivateKey) loadPrivateKeyFromPem(strPrivateKey, ALGORITHM);
 
         Algorithm algorithm = Algorithm.ECDSA512(null, privateKey);
 
-        String token = JWT.create().withSubject(CCAA_SUBJECT).withIssuer(CCAA_ISSUER).withIssuedAt(Date.from(OffsetDateTime.now().withOffsetSameInstant(ZoneOffset.UTC).toInstant())).withExpiresAt(Date.from(OffsetDateTime.now().withOffsetSameInstant(ZoneOffset.UTC).plusMinutes(TOKEN_MINS_EXPIRES).toInstant())).sign(algorithm);
+
+        Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        Instant expiresAt = issuedAt.plus(TOKEN_MINS_EXPIRES, ChronoUnit.MINUTES);
+
+        String token = JWT.create().withJWTId(UUID.randomUUID().toString()).withSubject(CCAA_SUBJECT).withIssuer(CCAA_ISSUER)
+                .withIssuedAt(Date.from(issuedAt))
+                .withExpiresAt(Date.from(expiresAt))
+                .sign(algorithm);
         System.out.println("JWT = " + token);
         return token;
     }

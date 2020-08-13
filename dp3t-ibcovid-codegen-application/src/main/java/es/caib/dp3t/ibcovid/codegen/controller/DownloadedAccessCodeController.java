@@ -2,6 +2,7 @@ package es.caib.dp3t.ibcovid.codegen.controller;
 
 import es.caib.dp3t.ibcovid.codegen.controller.config.RouteConstants;
 import es.caib.dp3t.ibcovid.codegen.service.DownloadedAccessCodeService;
+import es.caib.dp3t.ibcovid.codegen.service.impl.SmsService;
 import es.caib.dp3t.ibcovid.codegen.service.model.DownloadedAccessCodeSrvDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +23,12 @@ import java.util.List;
 @Api(tags = "Downloaded code administration operations")
 public class DownloadedAccessCodeController {
     private final DownloadedAccessCodeService downloadedAccessCodeService;
+    private final SmsService smsService;
 
-    public DownloadedAccessCodeController(DownloadedAccessCodeService downloadedAccessCodeService) {
+    public DownloadedAccessCodeController(final DownloadedAccessCodeService downloadedAccessCodeService,
+                                          final SmsService smsService) {
         this.downloadedAccessCodeService = downloadedAccessCodeService;
+        this.smsService = smsService;
     }
 
     @GetMapping(value = "")
@@ -43,10 +48,17 @@ public class DownloadedAccessCodeController {
     public void executeGenerateCodes(){
         log.info("Inicia el proceso de Generacion de Codigos");
         final List<DownloadedAccessCodeSrvDto> downloadedAccessCodeList = this.downloadedAccessCodeService.getDownloadedAccessCodeList();
-        if(!downloadedAccessCodeList.isEmpty()){
+        if(downloadedAccessCodeList.isEmpty()){
             downloadedAccessCodeService.generateCodes();
         }
         log.info("Finaliza el proceso de Generacion de Codigos");
     }
+
+    @GetMapping("/send-sms/{number}")
+    public void sendSms(@PathVariable("number") final String number) {
+        smsService.sendSms(number);
+    }
+
+
 
 }

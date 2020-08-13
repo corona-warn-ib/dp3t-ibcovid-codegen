@@ -49,13 +49,12 @@ jwt:
 application:
   radarcovid:
     size: 500
-    url: "https://ddu362ufohvxt.cloudfront.net/verification/generate"
-    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0NCk1JR2JNQkFHQnlxR1NNNDlBZ0VH
-      QlN1QkJBQWpBNEdHQUFRQlNZeXF2UkFBWVRjOHZjY25XN3QzWmRPUEZKbDQNCms4
-      UU1McGRkWENqSFFYRjUwQkMva0xvZVZpNXdvWHh6dkNFR2JUSjdEZXNjdlFLUUZB
-      dVpmQ2Y0MGdVQXhZbWsNClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJw
-      blV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHANClJLK1FkdThoRzFBNDVH
-      UDAvbEk9DQotLS0tLUVORCBQVUJMSUMgS0VZLS0tLS0NCg=="
+    url: "https://ddu362ufohvxt.cloudfront.net/verification/generate?n={number}"
+    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCU1l5cXZSQUFZVGM4dmNjblc3dDNaZE9QRkpsNAprOFFNTHBkZFhDakhRWEY1MEJDL2tMb2VWaTV3b1h4enZDRUdiVEo3RGVzY3ZRS1FGQXVaZkNmNDBnVUF4WW1rClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJwblV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHAKUksrUWR1OGhHMUE0NUdQMC9sST0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t"
+    sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}}&idCampanya=APPCOVID"
+    sms-text: "Mensaje de prueba con @ desde BITSMS-PLEXUS."
+
+
 
 cron:
   generate:

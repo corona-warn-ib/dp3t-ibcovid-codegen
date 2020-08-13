@@ -6,7 +6,7 @@
 
     <groupId>es.caib.dp3t</groupId>
     <artifactId>dp3t-ibcovid-codegen</artifactId>
-    <version>${revision}</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>DP3T IBCOVID Code Generator Parent</name>
@@ -14,11 +14,10 @@
     <url>https://github.com/corona-warn-ib</url>
 
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
@@ -49,6 +48,17 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.66</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.10.3</version>
+        </dependency>
+
         <!-- Spring boot dependencies, with Log4j2 support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
