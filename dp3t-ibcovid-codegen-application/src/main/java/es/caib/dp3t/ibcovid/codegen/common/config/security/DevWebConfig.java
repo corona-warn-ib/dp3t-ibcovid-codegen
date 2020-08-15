@@ -1,8 +1,7 @@
-package es.caib.dp3t.ibcovid.codegen.controller.config.security;
+package es.caib.dp3t.ibcovid.codegen.common.config.security;
 
 import es.caib.dp3t.ibcovid.codegen.controller.client.auth.IBCovidAuthClient;
 import es.caib.dp3t.ibcovid.codegen.controller.config.RouteConstants;
-import es.caib.dp3t.ibcovid.codegen.controller.filter.JWTAuthorizationFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -32,7 +31,7 @@ public class DevWebConfig extends BaseWebConfig {
                         RouteConstants.LOGIN_PATH)
                 .permitAll()
                 .anyRequest().denyAll().and()
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), ibCovidAuthClient))
+                //.addFilter(new JWTAuthorizationFilter(authenticationManager(), ibCovidAuthClient))
                 .cors().and()
                 .csrf().disable()
                 .headers().frameOptions().disable().and()

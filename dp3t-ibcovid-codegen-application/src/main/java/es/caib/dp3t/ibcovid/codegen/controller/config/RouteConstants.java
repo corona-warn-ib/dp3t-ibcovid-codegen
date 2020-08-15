@@ -9,6 +9,7 @@ public final class RouteConstants {
     public static final String ADMIN_PATH = BASE_PATH + "/admin";
 
     public static final String LOGIN_PATH = BASE_PATH + "/auth/login";
+    public static final String AUTH_TOKEN_PATH = BASE_PATH + "/auth/token";
 
     public static final String ACTUATOR_BASE_PATH = "/actuator";
     public static final String H2_CONSOLE_PATH = "/h2-console";

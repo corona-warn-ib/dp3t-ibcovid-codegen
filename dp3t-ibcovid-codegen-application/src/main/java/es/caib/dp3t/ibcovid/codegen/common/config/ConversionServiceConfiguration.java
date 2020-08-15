@@ -1,4 +1,4 @@
-package es.caib.dp3t.ibcovid.codegen.configuration;
+package es.caib.dp3t.ibcovid.codegen.common.config;
 
 import es.caib.dp3t.ibcovid.codegen.converter.CodeResultToDownloadedAccessCode;
 import org.springframework.context.annotation.Bean;

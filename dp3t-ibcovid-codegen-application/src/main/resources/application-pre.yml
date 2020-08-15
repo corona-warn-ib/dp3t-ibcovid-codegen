@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
   # Database
   datasource:
-    url: jdbc:postgresql://localhost:5433/dpppt
+    url: jdbc:postgresql://localhost:5432/dpppt
     driver-class-name: org.postgresql.ds.PGSimpleDataSource
     username: "postgres"
     password: "root"
@@ -30,3 +30,11 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.SQL.type.descriptor.sql: TRACE
     es.caib.dp3t.ibcovid: DEBUG
+
+keycloak:
+  url: "http://localhost:8080/auth/realms/GOIB/protocol/openid-connect/token"
+  realm: "GOIB"
+  clientId: "goib-default"
+  clientSecret: "c38f8cdb-a7ea-4df4-a298-2935d459cf6c"
+  grantType: "password"
+  tokenSign: "MIIClzCCAX8CBgFz7Y1OUjANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARHT0lCMB4XDTIwMDgxNDE1MTcwN1oXDTMwMDgxNDE1MTg0N1owDzENMAsGA1UEAwwER09JQjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJ+clBRZ7hddMKwRF7vDM2FlU4UAWpe2BGXga+1DmjAC7tEH0oXJa+Un1eUxkuhAeXc4J3ey/gLg45PK2a1slFOt+aDKg3ZCjFDnP1GY6XNzkTVwmXgGeJc8y9lLqff84fCs4/nQiFPD+jQiRdcT61XmfWAMqlFJx1rzYoXarw4cYw8hvPLUcbRvOpPqQTIsUrznySgxp6tv8W2MGlL2LPod9R4HxIFHtUD0+F4lq/NllEViNYQW80yCAIp1f0J3BMuTLxNzCJcUF/DSrr3h+2XTAergnoMg2FpX5QrJu5FApvBXPZrcCbEInh6NcqkR0G+u9JpcB2YDoXpJsZjkdrMCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEACiYuWZ3EFTBAFmPdouG2NOb3arJj6LpqeS20nTeDlglEO18GMMTc6CKcn15xU13SK9A7YwYPqvES9QPxL6apG1lZPIOtS5OY3UdKh65IEN2mCCRv6gxv0r+e0j6966sYv8v+Vmn0oC4tq9gmlVftj64Dvwu/4POumy3AGxfYAOj+jt0eQWa97uBEKN/zq/SzzLX5vBHHuvDsyVm9VsKOpJaTNcfWyfO5+yCR3B4DQqreyQocDXbuzQdNtYn+rhzDgl6DmdoWPXo/tn68o4zfuyqPttX1i+bQXAnzueLV8qG7FNbVAQddcwCS2xd5azpvyzvVxAs/xqvGPEk8FLwvYg=="

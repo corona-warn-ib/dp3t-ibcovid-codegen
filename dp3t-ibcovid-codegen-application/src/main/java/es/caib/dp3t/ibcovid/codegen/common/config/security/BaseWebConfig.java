@@ -1,6 +1,7 @@
-package es.caib.dp3t.ibcovid.codegen.controller.config.security;
+package es.caib.dp3t.ibcovid.codegen.common.config.security;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -11,6 +12,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+@Profile("dev")
 public abstract class BaseWebConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
