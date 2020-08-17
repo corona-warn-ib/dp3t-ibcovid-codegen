@@ -17,7 +17,7 @@ public class DeleteExposedAccessCodesTask {
         this.exposedAccessCodeRepository = exposedAccessCodeRepository;
     }
 
-    @Scheduled(cron = "${dp3t.ibcovid.codegen.tasks.delete-exposed-access-codes.cron}")
+    //@Scheduled(cron = "${dp3t.ibcovid.codegen.tasks.delete-exposed-access-codes.cron}")
     @Transactional
     public void run() {
         log.info("START DeleteExposedAccessCodesTask");

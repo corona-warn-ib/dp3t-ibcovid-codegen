@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -48,15 +49,18 @@ public class DownloadedAccessCodeController {
     public void executeGenerateCodes(){
         log.info("Inicia el proceso de Generacion de Codigos");
         final List<DownloadedAccessCodeSrvDto> downloadedAccessCodeList = this.downloadedAccessCodeService.getDownloadedAccessCodeList();
-        if(downloadedAccessCodeList.isEmpty()){
+        if(downloadedAccessCodeList.size() < 200){
             downloadedAccessCodeService.generateCodes();
         }
         log.info("Finaliza el proceso de Generacion de Codigos");
     }
 
-    @GetMapping("/send-sms/{number}")
-    public void sendSms(@PathVariable("number") final String number) {
-        smsService.sendSms(number);
+    @GetMapping("/send-sms")
+    public void sendSms(@RequestParam("number") final String number
+            , @RequestParam("code") final String code) {
+        log.info("BEGIN - sendSms");
+        smsService.sendSms(number, code);
+        log.debug("END - sendSms");
     }
 
 

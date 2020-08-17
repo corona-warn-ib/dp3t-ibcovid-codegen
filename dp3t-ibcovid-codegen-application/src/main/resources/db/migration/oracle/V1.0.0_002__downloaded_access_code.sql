@@ -1,9 +1,8 @@
-create sequence t_downloaded_access_code_id start with 1 increment by 1 nocache;
-create table t_downloaded_access_code (
-  id bigint not null default t_downloaded_access_code_id.nextval primary key,
-  access_code varchar(12) not null,
-  created_at timestamp not null default now(),
-  activated_at timestamp
+create sequence radarcov.rdv_downloaded_access_code_id start with 1 increment by 1 nocache;
+create table radarcov.rdv_downloaded_access_code (
+                                                 id number(19) not null,
+                                                 access_code varchar2(12) not null,
+                                                 created_at timestamp  default sysdate not null,
+                                                 activated_at timestamp,
+                                                 CONSTRAINT rdv_downloaded_access_code_pk PRIMARY KEY (id)
 );
-
-CREATE UNIQUE INDEX t_downloaded_access_code_uk ON t_downloaded_access_code (access_code);

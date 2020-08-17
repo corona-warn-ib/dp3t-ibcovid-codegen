@@ -30,10 +30,10 @@ public class SmsService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public void sendSms(final String number) {
+    public void sendSms(final String number, final String code) {
         restTemplate.exchange(url
                         .replace("{number}", number)
-                        .replace("{texto}", smsText),
+                        .replace("{texto}", String.format(smsText, code)),
                 HttpMethod.GET,
                 this.setHeader(),
                 Void.class)

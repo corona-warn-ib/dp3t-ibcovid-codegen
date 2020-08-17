@@ -11,12 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.LockModeType;
-import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-@Table(name = "t_downloaded_access_code")
+@Table(name = "RDV_DOWNLOADED_ACCESS_CODE")
 @Entity
 @Data
 @Builder
@@ -26,7 +25,8 @@ public class DownloadedAccessCode {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DOWNLOADED_ACCESS_CODE_SEQ")
+    @SequenceGenerator(sequenceName = "rdv_downloaded_access_code_id", allocationSize = 1, name = "DOWNLOADED_ACCESS_CODE_SEQ")
     private Long id;
 
     @Basic
