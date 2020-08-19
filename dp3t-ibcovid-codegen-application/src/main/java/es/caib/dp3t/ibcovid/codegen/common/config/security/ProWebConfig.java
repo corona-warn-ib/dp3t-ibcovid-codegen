@@ -23,9 +23,9 @@ public class ProWebConfig extends BaseWebConfig {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.antMatcher("/v1/admin/**").authorizeRequests()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
-                .addFilterBefore(new JWTAuthorizationFilter(this.tokenSign), UsernamePasswordAuthenticationFilter.class)
+                //.addFilterBefore(new JWTAuthorizationFilter(this.tokenSign), UsernamePasswordAuthenticationFilter.class)
                 .cors().and().csrf().disable();
     }
 

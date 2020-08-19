@@ -33,7 +33,7 @@ public class TokenService {
     private static final String ALGORITHM = "EC";
     private static final String CCAA_SUBJECT = "04";
     private static final String CCAA_ISSUER = "ISSUER";
-    private static final int TOKEN_MINS_EXPIRES = 15;
+    private static final int TOKEN_MINS_EXPIRES = 10;
 
     @Value("${application.radarcovid.publicKey}")
     private final String keyPublic = null;
@@ -51,7 +51,7 @@ public class TokenService {
         Algorithm algorithm = Algorithm.ECDSA512(null, privateKey);
 
 
-        Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS).minus(2, ChronoUnit.MINUTES);
         Instant expiresAt = issuedAt.plus(TOKEN_MINS_EXPIRES, ChronoUnit.MINUTES);
 
         String token = JWT.create().withJWTId(UUID.randomUUID().toString()).withSubject(CCAA_SUBJECT).withIssuer(CCAA_ISSUER)

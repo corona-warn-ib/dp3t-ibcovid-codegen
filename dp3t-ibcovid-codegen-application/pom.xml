@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>dp3t-ibcovid-codegen-application</artifactId>
+    <packaging>${project.packaging}</packaging>
 
     <profiles>
         <!-- START PACKAGING PROFILES -->
@@ -136,7 +137,7 @@
             <properties>
                 <activeEnvironment>pro</activeEnvironment>
                 <activeSpringProfiles>pro</activeSpringProfiles>
-                <enableDBMigration>true</enableDBMigration>
+                <enableDBMigration>false</enableDBMigration>
                 <databaseDialect>oracle</databaseDialect>
             </properties>
             <dependencies>
@@ -248,7 +249,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -272,6 +272,19 @@
                             <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven.war.plugin.version}</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <archive>
+                        <manifestEntries>
+                            <Dependencies>jdk.unsupported</Dependencies>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,36 @@
+---
+# App specific
+dp3t:
+  ibcovid:
+    codegen:
+      clients:
+        auth: "http://localhost:10103/v1"
+      # Expiration duration in hours
+      expiration-duration: 24
+
+spring:
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+  # Database
+  datasource:
+    url: ${DB_URL}
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+# Logging
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.SQL.type.descriptor.sql: TRACE
+    es.caib.dp3t.ibcovid: DEBUG
+
+keycloak:
+  url: ${KEYCLOAK_URL}
+  realm: ${KEYCLOAK_REALM}
+  clientId: ${KEYCLOAK_CLIENT_ID}
+  clientSecret: ${KEYCLOAK_CLIENT_SECRET}
+  grantType: ${KEYCLOAK_GRANT_TYPE}
+  tokenSign: ${KEYCLOAK_TOKEN_SIGN}

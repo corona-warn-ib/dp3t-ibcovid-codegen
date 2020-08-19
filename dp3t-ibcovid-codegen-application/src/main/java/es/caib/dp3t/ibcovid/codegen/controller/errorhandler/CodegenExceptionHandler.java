@@ -12,6 +12,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +26,22 @@ public class CodegenExceptionHandler {
     public ResponseEntity<List<ErrorMessageDto>> handleException(final Exception ex) {
         final IBCovidCodeGenException exception = new IBCovidCodeGenException(
                 ex, CodeGenErrorCodes.GENERAL_ERROR, "If it persists, please contact the administrator");
+        return processExceptionAndLogError(exception);
+    }
+
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ResponseEntity<List<ErrorMessageDto>> handleHttpClientErrorException(final HttpClientErrorException ex) {
+        IBCovidCodeGenException exception = null;
+        if(HttpStatus.FORBIDDEN.value() == (ex.getRawStatusCode())){
+            exception = new IBCovidCodeGenException(
+                    ex, CodeGenErrorCodes.FORBIDDEN, "You don't have enough permissions.");
+        } else if(HttpStatus.BAD_REQUEST.value() == ex.getRawStatusCode()){
+            exception = new IBCovidCodeGenException(
+                    ex, CodeGenErrorCodes.BAD_REQUEST, "Bad request.");
+        } else{
+            exception = new IBCovidCodeGenException(
+                    ex, CodeGenErrorCodes.GENERAL_ERROR, "If it persists, please contact the administrator.");
+        }
         return processExceptionAndLogError(exception);
     }
 

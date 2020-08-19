@@ -73,7 +73,7 @@ public class DownloadedAccessCodeServiceImpl implements DownloadedAccessCodeServ
 
     @Override
     public boolean generateCodes(){
-        ResponseEntity<CodesResult> resultResponseEntity = radarCovidClient.getCodes(size);
+        ResponseEntity<CodesResult> resultResponseEntity = radarCovidClient.getCodes(size, Boolean.FALSE);
         if(resultResponseEntity.getStatusCode().is2xxSuccessful()){
             CodesResult codesResult = resultResponseEntity.getBody();
             codesResult.getCodes().stream().forEach(code->{
@@ -86,6 +86,11 @@ public class DownloadedAccessCodeServiceImpl implements DownloadedAccessCodeServ
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    @Override
+    public ResponseEntity<CodesResult> generateCodesTest(final Integer codeNumber, final boolean testToken){
+        return radarCovidClient.getCodes(codeNumber, testToken);
     }
 
     private DownloadedAccessCode findCodeWithLock(){

@@ -1,5 +1,6 @@
 package es.caib.dp3t.ibcovid.codegen.controller;
 
+import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.CodesResult;
 import es.caib.dp3t.ibcovid.codegen.controller.config.RouteConstants;
 import es.caib.dp3t.ibcovid.codegen.service.DownloadedAccessCodeService;
 import es.caib.dp3t.ibcovid.codegen.service.impl.SmsService;
@@ -53,6 +54,12 @@ public class DownloadedAccessCodeController {
             downloadedAccessCodeService.generateCodes();
         }
         log.info("Finaliza el proceso de Generacion de Codigos");
+    }
+
+    @GetMapping("/generate-codes/test")
+    public ResponseEntity<CodesResult> executeGenerateCodesTest(@RequestParam final Integer number
+        , @RequestParam final boolean testToken){
+        return downloadedAccessCodeService.generateCodesTest(number, testToken);
     }
 
     @GetMapping("/send-sms")

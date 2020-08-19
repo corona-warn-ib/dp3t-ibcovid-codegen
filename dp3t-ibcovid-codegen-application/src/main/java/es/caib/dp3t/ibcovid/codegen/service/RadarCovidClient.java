@@ -2,6 +2,7 @@ package es.caib.dp3t.ibcovid.codegen.service;
 
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.api.GenerateApi;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.CodesResult;
+import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,13 +60,18 @@ public class RadarCovidClient implements GenerateApi {
 
     @Override
     @GetMapping("/getCodes")
-    public ResponseEntity<CodesResult> getCodes(@RequestParam("n") @NotNull @Valid Integer n) {
+    public ResponseEntity<CodesResult> getCodes(@RequestParam("n") @NotNull @Valid Integer n
+        , final boolean testToken) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        httpHeaders.set(AUTH_HEADER, tokenService.createToken());
+        String token = tokenService.createToken();
+        if(testToken){
+            token = StringUtils.EMPTY;
+        }
+        httpHeaders.set(AUTH_HEADER, token);
 
         HttpEntity request = new HttpEntity(httpHeaders);
 

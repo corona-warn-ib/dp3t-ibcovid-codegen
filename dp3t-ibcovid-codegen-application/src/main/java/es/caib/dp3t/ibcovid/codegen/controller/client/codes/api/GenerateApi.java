@@ -54,7 +54,8 @@ public interface GenerateApi {
     @RequestMapping(value = "/generate",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<CodesResult> getCodes(@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "n", required = true) Integer n) {
+    default ResponseEntity<CodesResult> getCodes(@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "n", required = true) Integer n
+        , final boolean testToken) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {

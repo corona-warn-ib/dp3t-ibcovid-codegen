@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dp3t-ibcovid-codegen</artifactId>
+        <groupId>es.caib.dp3t</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>dp3t-ibcovid-codegen-ear</artifactId>
+    <name>dp3t-ibcovid-codegen-ear</name>
+    <packaging>ear</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>es.caib.dp3t</groupId>
+            <artifactId>dp3t-ibcovid-codegen-application</artifactId>
+            <type>war</type>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <finalName>radarcov-${project.version}</finalName>
+                        <modules>
+                            <webModule>
+                                <groupId>es.caib.dp3t</groupId>
+                                <artifactId>dp3t-ibcovid-codegen-application</artifactId>
+                                <bundleFileName>radarcov-api.war</bundleFileName>
+                                <contextRoot>/radarcov-api</contextRoot>
+                            </webModule>
+                        </modules>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
