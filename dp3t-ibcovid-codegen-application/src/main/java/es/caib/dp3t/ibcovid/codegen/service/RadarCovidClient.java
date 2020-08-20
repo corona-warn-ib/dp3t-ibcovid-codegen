@@ -1,5 +1,6 @@
 package es.caib.dp3t.ibcovid.codegen.service;
 
+import es.caib.dp3t.ibcovid.codegen.common.exception.SediaInvalidSignatureException;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.api.GenerateApi;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.CodesResult;
 import org.apache.commons.lang3.StringUtils;
@@ -61,7 +62,7 @@ public class RadarCovidClient implements GenerateApi {
     @Override
     @GetMapping("/getCodes")
     public ResponseEntity<CodesResult> getCodes(@RequestParam("n") @NotNull @Valid Integer n
-        , final boolean testToken) {
+        , final boolean testToken) throws SediaInvalidSignatureException {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -93,6 +94,7 @@ public class RadarCovidClient implements GenerateApi {
             validated = signature.verify(Base64.getDecoder().decode(result.getBody().getSignature().getBytes(StandardCharsets.UTF_8)));
         } catch (Exception e) {
             log.error("Excepción validando firma: {}", e.getMessage(), e);
+            throw new SediaInvalidSignatureException("Invalid sedia signature.");
         } log.info("Signature validated: {}", validated);
 
         return result;

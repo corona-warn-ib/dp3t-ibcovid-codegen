@@ -12,7 +12,8 @@ public enum CodeGenErrorCodes {
     VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "Validation error: {0}"),
     ACCESS_CODE_NOT_VALID(HttpStatus.FORBIDDEN, "Access code not valid: {0}"),
     FORBIDDEN(HttpStatus.FORBIDDEN, "{0}"),
-    BAD_REQUEST(HttpStatus.BAD_REQUEST, "{0}");
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, "{0}"),
+    SEDIA_INVALID_SIGNATURE(HttpStatus.OK, "{0}");
 
 
     private final HttpStatus httpStatus;

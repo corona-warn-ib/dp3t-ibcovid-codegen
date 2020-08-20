@@ -1,5 +1,6 @@
 package es.caib.dp3t.ibcovid.codegen.controller;
 
+import es.caib.dp3t.ibcovid.codegen.common.exception.SediaInvalidSignatureException;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.CodesResult;
 import es.caib.dp3t.ibcovid.codegen.controller.config.RouteConstants;
 import es.caib.dp3t.ibcovid.codegen.service.DownloadedAccessCodeService;
@@ -8,11 +9,11 @@ import es.caib.dp3t.ibcovid.codegen.service.model.DownloadedAccessCodeSrvDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,8 @@ import java.util.List;
 @Log4j2
 @Api(tags = "Downloaded code administration operations")
 public class DownloadedAccessCodeController {
+    @Value("${application.radarcovid.limit}")
+    private Integer codesLimit;
     private final DownloadedAccessCodeService downloadedAccessCodeService;
     private final SmsService smsService;
 
@@ -47,10 +50,10 @@ public class DownloadedAccessCodeController {
 
     @GetMapping("/generate-codes")
     @Scheduled(cron = "${dp3t.ibcovid.codegen.tasks.delete-exposed-access-codes.cron}")
-    public void executeGenerateCodes(){
+    public void executeGenerateCodes() throws SediaInvalidSignatureException {
         log.info("Inicia el proceso de Generacion de Codigos");
         final List<DownloadedAccessCodeSrvDto> downloadedAccessCodeList = this.downloadedAccessCodeService.getDownloadedAccessCodeList();
-        if(downloadedAccessCodeList.size() < 200){
+        if(downloadedAccessCodeList.size() < this.codesLimit){
             downloadedAccessCodeService.generateCodes();
         }
         log.info("Finaliza el proceso de Generacion de Codigos");
@@ -58,7 +61,7 @@ public class DownloadedAccessCodeController {
 
     @GetMapping("/generate-codes/test")
     public ResponseEntity<CodesResult> executeGenerateCodesTest(@RequestParam final Integer number
-        , @RequestParam final boolean testToken){
+        , @RequestParam final boolean testToken) throws SediaInvalidSignatureException {
         return downloadedAccessCodeService.generateCodesTest(number, testToken);
     }
 

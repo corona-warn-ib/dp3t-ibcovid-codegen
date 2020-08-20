@@ -5,6 +5,7 @@
  */
 package es.caib.dp3t.ibcovid.codegen.controller.client.codes.api;
 
+import es.caib.dp3t.ibcovid.codegen.common.exception.SediaInvalidSignatureException;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.CodesResult;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.MessageResponse;
 import io.swagger.annotations.Api;
@@ -55,7 +56,7 @@ public interface GenerateApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     default ResponseEntity<CodesResult> getCodes(@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "n", required = true) Integer n
-        , final boolean testToken) {
+        , final boolean testToken) throws SediaInvalidSignatureException {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {

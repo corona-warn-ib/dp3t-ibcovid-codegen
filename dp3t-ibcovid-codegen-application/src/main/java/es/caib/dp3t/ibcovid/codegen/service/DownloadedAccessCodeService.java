@@ -1,5 +1,6 @@
 package es.caib.dp3t.ibcovid.codegen.service;
 
+import es.caib.dp3t.ibcovid.codegen.common.exception.SediaInvalidSignatureException;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.CodesResult;
 import es.caib.dp3t.ibcovid.codegen.service.model.DownloadedAccessCodeSrvDto;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ public interface DownloadedAccessCodeService {
 
     List<DownloadedAccessCodeSrvDto> getDownloadedAccessCodeList();
 
-    boolean generateCodes();
+    boolean generateCodes() throws SediaInvalidSignatureException;
 
-    ResponseEntity<CodesResult> generateCodesTest(final Integer codeNumber, final boolean testToken);
+    ResponseEntity<CodesResult> generateCodesTest(final Integer codeNumber, final boolean testToken) throws SediaInvalidSignatureException;
 }

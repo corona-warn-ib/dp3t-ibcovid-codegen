@@ -31,6 +31,12 @@ public class CodeGenController {
         this.codeGenService = codeGenService;
     }
 
+    /**
+     *
+     * @deprecated It was deprecated because app doen't proced codes in new versions.
+     *
+     */
+    @Deprecated
     @PostMapping(value = "/onset")
     @ApiOperation(value = "Gets the access token for allowing to upload the exposed keys")
     public ResponseEntity<GetAuthenticationTokenRSDto> getAuthenticationToken(

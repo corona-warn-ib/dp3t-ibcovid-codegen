@@ -2,6 +2,7 @@ package es.caib.dp3t.ibcovid.codegen.controller.errorhandler;
 
 import es.caib.dp3t.ibcovid.codegen.common.exception.CodeGenErrorCodes;
 import es.caib.dp3t.ibcovid.codegen.common.exception.IBCovidCodeGenException;
+import es.caib.dp3t.ibcovid.codegen.common.exception.SediaInvalidSignatureException;
 import es.caib.dp3t.ibcovid.codegen.controller.model.ErrorMessageDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,13 @@ public class CodegenExceptionHandler {
             exception = new IBCovidCodeGenException(
                     ex, CodeGenErrorCodes.GENERAL_ERROR, "If it persists, please contact the administrator.");
         }
+        return processExceptionAndLogError(exception);
+    }
+
+    @ExceptionHandler(SediaInvalidSignatureException.class)
+    public ResponseEntity<List<ErrorMessageDto>> sediaInvalidSignatureException(final SediaInvalidSignatureException ex) {
+        final IBCovidCodeGenException exception = new IBCovidCodeGenException(
+                ex, CodeGenErrorCodes.SEDIA_INVALID_SIGNATURE, "Sedia service has sent one invalid signature");
         return processExceptionAndLogError(exception);
     }
 

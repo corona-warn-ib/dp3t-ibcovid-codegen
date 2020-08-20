@@ -1,5 +1,6 @@
 package es.caib.dp3t.ibcovid.codegen.service.impl;
 
+import es.caib.dp3t.ibcovid.codegen.common.exception.SediaInvalidSignatureException;
 import es.caib.dp3t.ibcovid.codegen.controller.client.codes.model.CodesResult;
 import es.caib.dp3t.ibcovid.codegen.data.DownloadedAccessCodeRepository;
 import es.caib.dp3t.ibcovid.codegen.data.model.DownloadedAccessCode;
@@ -10,7 +11,6 @@ import es.caib.dp3t.ibcovid.codegen.service.model.DownloadedAccessCodeSrvDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -72,7 +72,7 @@ public class DownloadedAccessCodeServiceImpl implements DownloadedAccessCodeServ
     }
 
     @Override
-    public boolean generateCodes(){
+    public boolean generateCodes() throws SediaInvalidSignatureException {
         ResponseEntity<CodesResult> resultResponseEntity = radarCovidClient.getCodes(size, Boolean.FALSE);
         if(resultResponseEntity.getStatusCode().is2xxSuccessful()){
             CodesResult codesResult = resultResponseEntity.getBody();
@@ -89,7 +89,7 @@ public class DownloadedAccessCodeServiceImpl implements DownloadedAccessCodeServ
     }
 
     @Override
-    public ResponseEntity<CodesResult> generateCodesTest(final Integer codeNumber, final boolean testToken){
+    public ResponseEntity<CodesResult> generateCodesTest(final Integer codeNumber, final boolean testToken) throws SediaInvalidSignatureException {
         return radarCovidClient.getCodes(codeNumber, testToken);
     }
 

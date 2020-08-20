@@ -32,6 +32,12 @@ public class CodeGenAdminController {
         this.codeGenAdminService = codeGenAdminService;
     }
 
+    /**
+     *
+     * @deprecated It was deprecated because app doen't proced codes in new versions.
+     *
+     */
+    @Deprecated
     @PostMapping(value = "")
     @ApiOperation(value = "Generates an access code to allow uploading the exposed keys keys")
     public ResponseEntity<CreateExposedAccessCodeRSDto> createExposedAccessCode(

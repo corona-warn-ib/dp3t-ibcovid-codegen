@@ -33,6 +33,7 @@
     </properties>
 
     <modules>
+        <module>dp3t-ibcovid-codegen-front</module>
         <module>dp3t-ibcovid-codegen-application</module>
         <module>dp3t-ibcovid-codegen-ear</module>
     </modules>
