@@ -15,16 +15,34 @@ dp3t:
 server:
   port: 10102
 
+application:
+  radarcovid:
+    size: 5
+    limit: 2
+    url: "https://ddu362ufohvxt.cloudfront.net/verification/generate?n={number}"
+    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCU1l5cXZSQUFZVGM4dmNjblc3dDNaZE9QRkpsNAprOFFNTHBkZFhDakhRWEY1MEJDL2tMb2VWaTV3b1h4enZDRUdiVEo3RGVzY3ZRS1FGQXVaZkNmNDBnVUF4WW1rClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJwblV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHAKUksrUWR1OGhHMUE0NUdQMC9sST0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t"
+    sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}&idCampanya=APPCOVID"
+    sms-text: "Su código para Radar Covid es %s."
+    sms-user: "jorge.sanchezferreiro@plexus.es"
+    sms-password: "Tecnocrata-666"
+
+jwt:
+  PRIVATE_KEY_FILE: "classpath://generated_private_base64.pem"
+  ALGORITHM: "EC"
+  CCAA_SUBJECT: "04"
+  CCAA_ISSUER: "ISSUER"
+  TOKEN_MINS_EXPIRES: 15
+
 spring:
   jpa:
     show-sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform:  org.hibernate.dialect.Oracle10gDialect
   # Database
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: "sa"
-    password: ""
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: "radarcov"
+    password: "RADARCOV"
 
 # Logging
 logging:

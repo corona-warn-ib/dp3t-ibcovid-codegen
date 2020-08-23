@@ -40,14 +40,14 @@
                             <webModule>
                                 <groupId>es.caib.dp3t</groupId>
                                 <artifactId>dp3t-ibcovid-codegen-front</artifactId>
-                                <bundleFileName>radarcov-front.war</bundleFileName>
-                                <contextRoot>/radarcov-front</contextRoot>
+                                <bundleFileName>radarcovfront.war</bundleFileName>
+                                <contextRoot>/radarcovfront</contextRoot>
                             </webModule>
                             <webModule>
                                 <groupId>es.caib.dp3t</groupId>
                                 <artifactId>dp3t-ibcovid-codegen-application</artifactId>
-                                <bundleFileName>radarcov-api.war</bundleFileName>
-                                <contextRoot>/radarcov-api</contextRoot>
+                                <bundleFileName>radarcovapi.war</bundleFileName>
+                                <contextRoot>/radarcovapi</contextRoot>
                             </webModule>
                         </modules>
                     </configuration>

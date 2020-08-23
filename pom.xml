@@ -30,6 +30,7 @@
         <mariadb.version>1.6.0</mariadb.version>
         <open-feign.version>9.3.1</open-feign.version>
         <ibcovid-auth-client.version>1.0.0-SNAPSHOT</ibcovid-auth-client.version>
+        <oracle.version>19.7.0.0</oracle.version>
     </properties>
 
     <modules>

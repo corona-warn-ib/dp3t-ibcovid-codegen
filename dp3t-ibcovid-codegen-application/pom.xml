@@ -74,15 +74,8 @@
                 <activeEnvironment>dev</activeEnvironment>
                 <activeSpringProfiles>dev</activeSpringProfiles>
                 <enableDBMigration>false</enableDBMigration>
-                <databaseDialect>h2</databaseDialect>
+                <databaseDialect>oracle</databaseDialect>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
         </profile>
         <!-- PRE profile -->
         <profile>
@@ -108,13 +101,6 @@
                 <enableDBMigration>false</enableDBMigration>
                 <databaseDialect>oracle</databaseDialect>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>com.oracle.database.jdbc</groupId>
-                    <artifactId>ojdbc10</artifactId>
-                    <version>19.7.0.0</version>
-                </dependency>
-            </dependencies>
         </profile>
         <!-- PRO profile -->
         <profile>
@@ -140,13 +126,6 @@
                 <enableDBMigration>false</enableDBMigration>
                 <databaseDialect>oracle</databaseDialect>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>com.oracle.database.jdbc</groupId>
-                    <artifactId>ojdbc10</artifactId>
-                    <version>19.7.0.0</version>
-                </dependency>
-            </dependencies>
         </profile>
         <!-- END GENERIC ENVIRONMENT PROFILES -->
     </profiles>
@@ -221,6 +200,13 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${apache-commons-io.version}</version>
+        </dependency>
+
+        <!-- Database -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc10</artifactId>
+            <version>${oracle.version}</version>
         </dependency>
     </dependencies>
 

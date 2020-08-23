@@ -12,16 +12,31 @@ dp3t:
 server:
   port: 10102
 
+application:
+  radarcovid:
+    size: 5
+    limit: 2
+    url: "https://ddu362ufohvxt.cloudfront.net/verification/generate?n={number}"
+    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCRWd0cTlUeHlSMWxmTjNWNXgxQUFEUTlpb0hZYQpxbi9icWE3RGJ0SGhhbDhxUFZuNGpwS2xJY3AyYjNPb3VRYmNIZnZJSGVHYjE0TEdpdmUyd0RyT0QwQUFzajdyClIzL0hsN0g4MlJXdUdLMldGRTdWNWRCN1gwNC8wZHI5ZzBQVTlacVNnNTRYdC9TaWpvMGRvVllzUHBJTEtjSmUKeWNhTis3eGtiNnJvQVdCR0FKVT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=="
+    sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}&idCampanya=APPCOVID"
+    sms-text: "Su código para Radar Covid es %s."
+    sms-user: "jorge.sanchezferreiro@plexus.es"
+    sms-password: "Tecnocrata-666"
+
+jwt:
+  PRIVATE_KEY_FILE: "classpath://generated_private_base64.pem"
+  ALGORITHM: "EC"
+  CCAA_SUBJECT: "04"
+  CCAA_ISSUER: "ISSUER"
+  TOKEN_MINS_EXPIRES: 15
+
 spring:
   jpa:
     show-sql: true
     database-platform: org.hibernate.dialect.Oracle10gDialect
   # Database
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    username: "radarcov"
-    password: "RADARCOV"
+    jndi-name: "java:/es.caib.radarcov.db"
 
 # Logging
 logging:

@@ -28,7 +28,7 @@ import java.util.UUID;
 
 @Service
 public class TokenService {
-
+    @Value("jwt.PRIVATE_KEY_FILE")
     private static final String PRIVATE_KEY_FILE = "classpath://generated_private_base64.pem";
     private static final String ALGORITHM = "EC";
     private static final String CCAA_SUBJECT = "04";

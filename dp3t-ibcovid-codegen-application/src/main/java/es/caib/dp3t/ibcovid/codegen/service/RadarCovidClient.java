@@ -92,6 +92,9 @@ public class RadarCovidClient implements GenerateApi {
             signature.initVerify(publicKey);
             signature.update(stringBuilder.toString().getBytes("UTF-8"));
             validated = signature.verify(Base64.getDecoder().decode(result.getBody().getSignature().getBytes(StandardCharsets.UTF_8)));
+            if(!validated){
+                throw new SediaInvalidSignatureException("Invalid sedia signature.");
+            }
         } catch (Exception e) {
             log.error("Excepción validando firma: {}", e.getMessage(), e);
             throw new SediaInvalidSignatureException("Invalid sedia signature.");

@@ -20,27 +20,58 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
-    <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>${maven.war.plugin.version}</version>
-                    <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                        <webResources>
-                            <resource>
-                                <directory>src/main/resources/web</directory>
-                            </resource>
-                            <resource>
-                                <directory>src/main/resources/WEB-INF</directory>
-                                <targetPath>WEB-INF</targetPath>
-                            </resource>
-                        </webResources>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+    <profiles>
+        <profile>
+            <id>pre</id>
+            <build>
+                <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <version>${maven.war.plugin.version}</version>
+                            <configuration>
+                                <failOnMissingWebXml>false</failOnMissingWebXml>
+                                <webResources>
+                                    <resource>
+                                        <directory>src/main/resources/pre/web</directory>
+                                    </resource>
+                                    <resource>
+                                        <directory>src/main/resources/pre/WEB-INF</directory>
+                                        <targetPath>WEB-INF</targetPath>
+                                    </resource>
+                                </webResources>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <build>
+                <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <version>${maven.war.plugin.version}</version>
+                            <configuration>
+                                <failOnMissingWebXml>false</failOnMissingWebXml>
+                                <webResources>
+                                    <resource>
+                                        <directory>src/main/resources/pro/web</directory>
+                                    </resource>
+                                    <resource>
+                                        <directory>src/main/resources/pro/WEB-INF</directory>
+                                        <targetPath>WEB-INF</targetPath>
+                                    </resource>
+                                </webResources>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 </project>

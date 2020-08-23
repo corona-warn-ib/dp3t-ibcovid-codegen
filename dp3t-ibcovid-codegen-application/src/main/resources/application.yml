@@ -39,24 +39,6 @@ spring:
 logging:
   config: classpath:log4j2-@activeEnvironment@.yml
 
-jwt:
-    PRIVATE_KEY_FILE: "classpath://generated_private_base64.pem"
-    ALGORITHM: "EC"
-    CCAA_SUBJECT: "04"
-    CCAA_ISSUER: "ISSUER"
-    TOKEN_MINS_EXPIRES: 15
-
-application:
-  radarcovid:
-    size: 3
-    limit: 200
-    url: "https://ddu362ufohvxt.cloudfront.net/verification/generate?n={number}"
-    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCU1l5cXZSQUFZVGM4dmNjblc3dDNaZE9QRkpsNAprOFFNTHBkZFhDakhRWEY1MEJDL2tMb2VWaTV3b1h4enZDRUdiVEo3RGVzY3ZRS1FGQXVaZkNmNDBnVUF4WW1rClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJwblV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHAKUksrUWR1OGhHMUE0NUdQMC9sST0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t"
-    sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}&idCampanya=APPCOVID"
-    sms-text: "Su código para Radar Covid es %s."
-    sms-user: "jorge.sanchezferreiro@plexus.es"
-    sms-password: "Tecnocrata-666"
-
 cron:
   generate:
     frecuency: "0/30 * * * * ?"
