@@ -7,6 +7,11 @@ dp3t:
         auth: "http://localhost:10103/v1"
       # Expiration duration in hours
       expiration-duration: 24
+      tasks:
+        url: "/v1/admin/downloaded-access-code"
+        url-generate-codes: "/v1/admin/downloaded-access-code/generate-codes"
+        url-generate-codes-test: "/v1/admin/downloaded-access-code/generate-codes/test"
+        url-send-sms: "/v1/admin/downloaded-access-code/generate-codes"
 
 # Server settings
 server:

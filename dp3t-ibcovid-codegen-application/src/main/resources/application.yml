@@ -10,6 +10,10 @@ dp3t:
       # Expiration duration in hours
       expiration-duration: 24
       tasks:
+        url: "/v1/admin/downloaded-access-code"
+        url-generate-codes: "/v1/admin/downloaded-access-code/generate-codes"
+        url-generate-codes-test: "/v1/admin/downloaded-access-code/generate-codes/test"
+        url-send-sms: "/v1/admin/downloaded-access-code/generate-codes"
         delete-exposed-access-codes:
           cron: "0 */1 * ? * *"
 

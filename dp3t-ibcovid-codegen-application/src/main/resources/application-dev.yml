@@ -8,6 +8,10 @@ dp3t:
       # Expiration duration in hours
       expiration-duration: 60
       tasks:
+        url: "/v1/admin/downloaded-access-code"
+        url-generate-codes: "/v1/admin/downloaded-access-code/generate-codes"
+        url-generate-codes-test: "/v1/admin/downloaded-access-code/generate-codes/test"
+        url-send-sms: "/v1/admin/downloaded-access-code/generate-codes"
         delete-exposed-access-codes:
           cron: "0 */30 * ? * *"
 
@@ -20,7 +24,7 @@ application:
     size: 5
     limit: 2
     url: "https://ddu362ufohvxt.cloudfront.net/verification/generate?n={number}"
-    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCU1l5cXZSQUFZVGM4dmNjblc3dDNaZE9QRkpsNAprOFFNTHBkZFhDakhRWEY1MEJDL2tMb2VWaTV3b1h4enZDRUdiVEo3RGVzY3ZRS1FGQXVaZkNmNDBnVUF4WW1rClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJwblV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHAKUksrUWR1OGhHMUE0NUdQMC9sST0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0t"
+    publicKey: "TUlHYk1CQUdCeXFHU000OUFnRUdCU3VCQkFBakE0R0dBQVFCU1l5cXZSQUFZVGM4dmNjblc3dDNaZE9QRkpsNAprOFFNTHBkZFhDakhRWEY1MEJDL2tMb2VWaTV3b1h4enZDRUdiVEo3RGVzY3ZRS1FGQXVaZkNmNDBnVUF4WW1rClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJwblV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHAKUksrUWR1OGhHMUE0NUdQMC9sST0="
     sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}&idCampanya=APPCOVID"
     sms-text: "Su código para Radar Covid es %s."
     sms-user: "jorge.sanchezferreiro@plexus.es"
@@ -41,8 +45,8 @@ spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    username: "radarcov"
-    password: "RADARCOV"
+    username: "SYSTEM"
+    password: "admin"
 
 # Logging
 logging:
