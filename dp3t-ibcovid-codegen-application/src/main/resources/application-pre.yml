@@ -48,6 +48,13 @@ spring:
   datasource:
     jndi-name: "java:/es.caib.radarcov.db"
 
+keycloak:
+  url: "https://loginpre.caib.es/auth/realms/webpre/protocol/openid-connect/token"
+  realm: "webpre"
+  clientId: "goib-ws"
+  clientSecret: "fac3667e-4601-4f61-9eef-5629eb5155ea"
+  grantType: "password"
+
 # Logging
 logging:
   level:

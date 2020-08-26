@@ -5,7 +5,7 @@
 # /app/caib/radarcov/
 external:
   application:
-    properties: "/app/caib/radarcov/application.properties"
+    properties: "C:\\application.properties"
 
 dp3t:
   ibcovid:
@@ -52,6 +52,13 @@ spring:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     username: "system"
     password: "oracle"
+
+keycloak:
+  url: "http://localhost:8080/auth/realms/webpre/protocol/openid-connect/token"
+  realm: "webpre"
+  clientId: "goib-ws"
+  clientSecret: "3962c60d-4cd6-48f8-b2f4-cf27ceadecdf"
+  grantType: "password"
 
 # Logging
 logging:
