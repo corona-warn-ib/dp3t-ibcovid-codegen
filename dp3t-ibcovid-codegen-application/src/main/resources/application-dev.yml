@@ -1,5 +1,12 @@
 ---
 # App specific
+
+#todo:Modificar para despliegue (También en el app externo)
+# /app/caib/radarcov/
+external:
+  application:
+    properties: "/app/caib/radarcov/application.properties"
+
 dp3t:
   ibcovid:
     codegen:
@@ -23,19 +30,17 @@ application:
   radarcovid:
     size: 5
     limit: 2
-    url: "https://ddu362ufohvxt.cloudfront.net/verification/generate?n={number}"
-    publicKey: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0NCk1JR2JNQkFHQnlxR1NNNDlBZ0VHQlN1QkJBQWpBNEdHQUFRQlNZeXF2UkFBWVRjOHZjY25XN3QzWmRPUEZKbDQNCms4UU1McGRkWENqSFFYRjUwQkMva0xvZVZpNXdvWHh6dkNFR2JUSjdEZXNjdlFLUUZBdVpmQ2Y0MGdVQXhZbWsNClZFeFl5Z3hSQVVBRW55Nk9iY08raTFwdnQyaWxMRlJwblV0WUxJS0xDdEZkWFpLeWFoak9RWnVBSU9aTTZKSHANClJLK1FkdThoRzFBNDVHUDAvbEk9DQotLS0tLUVORCBQVUJMSUMgS0VZLS0tLS0NCg=="
     sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}&idCampanya=APPCOVID"
     sms-text: "Su código para Radar Covid es %s."
     sms-user: "jorge.sanchezferreiro@plexus.es"
     sms-password: "Tecnocrata-666"
 
-jwt:
-  PRIVATE_KEY_FILE: "classpath://generated_private_base64.pem"
-  ALGORITHM: "EC"
-  CCAA_SUBJECT: "04"
-  CCAA_ISSUER: "ISSUER"
-  TOKEN_MINS_EXPIRES: 15
+#jwt:
+#  ALGORITHM: "EC"
+#  CCAA_SUBJECT: "04"
+#  CCAA_ISSUER: "ISSUER"
+#  TOKEN_MINS_EXPIRES: 15
+
 
 spring:
   jpa:
@@ -45,8 +50,8 @@ spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    username: "SYSTEM"
-    password: "admin"
+    username: "system"
+    password: "oracle"
 
 # Logging
 logging:

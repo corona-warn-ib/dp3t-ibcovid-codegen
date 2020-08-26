@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping(value = RouteConstants.DOWNLOADED_CODE_ADMIN_BASE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE})
 @Log4j2
 @Api(tags = "Downloaded code administration operations")
 public class DownloadedAccessCodeController {
@@ -36,7 +36,7 @@ public class DownloadedAccessCodeController {
         this.smsService = smsService;
     }
 
-    @GetMapping(value = "${dp3t.ibcovid.codegen.tasks.url}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "")
     @ApiOperation(value = "Get one downloaded access code")
     public ResponseEntity<DownloadedAccessCodeSrvDto> getDownloadedAccessCode() {
         log.debug("BEGIN - getDownloadedAccessCode");
@@ -48,7 +48,7 @@ public class DownloadedAccessCodeController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping(value = "${dp3t.ibcovid.codegen.tasks.url-generate-codes}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping("/generate-codes")
     @Scheduled(cron = "${dp3t.ibcovid.codegen.tasks.delete-exposed-access-codes.cron}")
     public void executeGenerateCodes() throws SediaInvalidSignatureException {
         log.info("Inicia el proceso de Generacion de Codigos");
@@ -59,13 +59,13 @@ public class DownloadedAccessCodeController {
         log.info("Finaliza el proceso de Generacion de Codigos");
     }
 
-    @GetMapping(value = "${dp3t.ibcovid.codegen.tasks.url-generate-codes-test}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping("/generate-codes/test")
     public ResponseEntity<CodesResult> executeGenerateCodesTest(@RequestParam final Integer number
         , @RequestParam final boolean testToken) throws SediaInvalidSignatureException {
         return downloadedAccessCodeService.generateCodesTest(number, testToken);
     }
 
-    @GetMapping(value = "${dp3t.ibcovid.codegen.tasks.url-send-sms}")
+    @GetMapping("/send-sms")
     public void sendSms(@RequestParam("number") final String number
             , @RequestParam("code") final String code) {
         log.info("BEGIN - sendSms");

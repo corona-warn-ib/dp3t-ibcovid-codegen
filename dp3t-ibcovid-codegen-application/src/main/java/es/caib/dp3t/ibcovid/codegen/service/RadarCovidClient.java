@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
@@ -31,6 +32,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.Properties;
 
 @RestController
 @Validated
@@ -40,23 +42,30 @@ public class RadarCovidClient implements GenerateApi {
 
     private static final Logger log = LoggerFactory.getLogger(RadarCovidClient.class);
 
-
-    @Value("${application.radarcovid.url}")
     private String url;
 
-    @Value("${application.radarcovid.publicKey}")
     private String radarCovidPublicKey;
 
     private static final String AUTH_HEADER = "x-sedia-authorization";
 
     private final TokenService tokenService;
+    private final Properties prop;
     private final ConversionService conversionService;
 
     @Autowired
     RadarCovidClient(final TokenService tokenService,
-                     final ConversionService conversionService){
+                     final ConversionService conversionService,
+                     @Value("${external.application.properties}") final String external){
         this.tokenService = tokenService;
         this.conversionService = conversionService;
+
+        prop = new Properties();
+
+        try {
+            prop.load(new FileInputStream(external));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -64,6 +73,9 @@ public class RadarCovidClient implements GenerateApi {
     public ResponseEntity<CodesResult> getCodes(@RequestParam("n") @NotNull @Valid Integer n
         , final boolean testToken) throws SediaInvalidSignatureException {
         RestTemplate restTemplate = new RestTemplate();
+
+        url = prop.getProperty("application.radarcovid.url");
+        radarCovidPublicKey = prop.getProperty("application.radarcovid.publicKey");
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -84,7 +96,7 @@ public class RadarCovidClient implements GenerateApi {
         StringBuilder stringBuilder = new StringBuilder();
         result.getBody().getCodes().stream().forEach(stringBuilder::append);
 
-        boolean validated = false;
+        boolean validated;
         try {
             String strPublicKey = getBase64Key(radarCovidPublicKey);
             ECPublicKey publicKey = (ECPublicKey) loadPublicKeyFromPem(strPublicKey, "EC");

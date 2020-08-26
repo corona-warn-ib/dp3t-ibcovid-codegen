@@ -6,6 +6,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.util.io.pem.PemReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,37 +25,46 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Properties;
 import java.util.UUID;
 
 @Service
 public class TokenService {
-    @Value("jwt.PRIVATE_KEY_FILE")
-    private static final String PRIVATE_KEY_FILE = "classpath://generated_private_base64.pem";
-    private static final String ALGORITHM = "EC";
-    private static final String CCAA_SUBJECT = "04";
-    private static final String CCAA_ISSUER = "ISSUER";
-    private static final int TOKEN_MINS_EXPIRES = 10;
+//    @Value("jwt.PRIVATE_KEY_FILE")
+//    private static final String PRIVATE_KEY_FILE = "classpath://generated_private_base64.pem";
+//    private static final String ALGORITHM = "EC";
+//    private static final String CCAA_SUBJECT = "04";
+//    private static final String CCAA_ISSUER = "ISSUER";
+//    private static final int TOKEN_MINS_EXPIRES = 10;
 
-    @Value("${application.radarcovid.publicKey}")
-    private final String keyPublic = null;
+    private final Properties prop;
 
+    @Autowired
+    public TokenService(@Value("${external.application.properties}") final String external) {
+        prop = new Properties();
 
-    public TokenService() {
-
+        try {
+            prop.load(new FileInputStream(external));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String run() throws Exception {
 
-        String strPrivateKey = getBase64Key(loadKey(PRIVATE_KEY_FILE));
-        ECPrivateKey privateKey = (ECPrivateKey) loadPrivateKeyFromPem(strPrivateKey, ALGORITHM);
+        String strPrivateKey = getBase64Key(loadKey(prop.getProperty("jwt.PRIVATE_KEY_FILE")));
+        ECPrivateKey privateKey = (ECPrivateKey) loadPrivateKeyFromPem(strPrivateKey, prop.getProperty("jwt.ALGORITHM"));
 
         Algorithm algorithm = Algorithm.ECDSA512(null, privateKey);
 
 
         Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS).minus(2, ChronoUnit.MINUTES);
-        Instant expiresAt = issuedAt.plus(TOKEN_MINS_EXPIRES, ChronoUnit.MINUTES);
+        Instant expiresAt = issuedAt.plus(Long.parseLong(prop.getProperty("jwt.TOKEN_MINS_EXPIRES")), ChronoUnit.MINUTES);
 
-        String token = JWT.create().withJWTId(UUID.randomUUID().toString()).withSubject(CCAA_SUBJECT).withIssuer(CCAA_ISSUER)
+        String token = JWT.create()
+                .withJWTId(UUID.randomUUID().toString())
+                .withSubject(prop.getProperty("jwt.CCAA_SUBJECT"))
+                .withIssuer(prop.getProperty("jwt.CCAA_ISSUER"))
                 .withIssuedAt(Date.from(issuedAt))
                 .withExpiresAt(Date.from(expiresAt))
                 .sign(algorithm);
@@ -73,7 +83,10 @@ public class TokenService {
 
     private String loadKey(String resource) throws Exception {
         StringBuilder stringBuilder = new StringBuilder();
-        InputStream inputStream = this.getClass().getResourceAsStream(resource.substring(11));
+        File file = new File(resource);
+        InputStream inputStream = new FileInputStream(file);
+
+                //this.getClass().getResourceAsStream(resource.substring(11));
         new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(stringBuilder::append);
         return stringBuilder.toString();
     }
