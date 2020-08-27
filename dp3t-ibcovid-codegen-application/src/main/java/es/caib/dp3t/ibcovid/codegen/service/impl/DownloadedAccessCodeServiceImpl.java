@@ -18,9 +18,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 @Log4j2
@@ -31,17 +34,18 @@ public class DownloadedAccessCodeServiceImpl implements DownloadedAccessCodeServ
     private final ConversionService conversionService;
     private final RadarCovidClient radarCovidClient;
 
-    @Value("${application.radarcovid.size}")
-    private final Integer size = 1;
+    private final String external;
 
     public DownloadedAccessCodeServiceImpl(final EntityManager entityManager,
                                            final DownloadedAccessCodeRepository downloadedAccessCodeRepository,
                                            final ConversionService conversionService,
-                                           final RadarCovidClient radarCovidClient) {
+                                           final RadarCovidClient radarCovidClient,
+                                           @Value("${external.application.properties}") final String external) {
         this.downloadedAccessCodeRepository = downloadedAccessCodeRepository;
         this.entityManager = entityManager;
         this.conversionService = conversionService;
         this.radarCovidClient = radarCovidClient;
+        this.external = external;
     }
 
     @Override
@@ -73,6 +77,14 @@ public class DownloadedAccessCodeServiceImpl implements DownloadedAccessCodeServ
 
     @Override
     public boolean generateCodes() throws SediaInvalidSignatureException {
+        Properties prop = new Properties();
+        Integer size = 5;
+        try {
+            prop.load(new FileInputStream(external));
+            size = Integer.parseInt(prop.getProperty("application.radarcovid.size"));
+        } catch (IOException e) {
+            log.error("ERROR al recuperar el numero de codigos a solicitar a SEDIA");
+        }
         ResponseEntity<CodesResult> resultResponseEntity = radarCovidClient.getCodes(size, Boolean.FALSE);
         if(resultResponseEntity.getStatusCode().is2xxSuccessful()){
             CodesResult codesResult = resultResponseEntity.getBody();

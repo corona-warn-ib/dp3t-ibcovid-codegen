@@ -18,22 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 @RestController
 @RequestMapping(value = RouteConstants.DOWNLOADED_CODE_ADMIN_BASE_PATH, produces = {MediaType.APPLICATION_JSON_VALUE})
 @Log4j2
 @Api(tags = "Downloaded code administration operations")
 public class DownloadedAccessCodeController {
-    @Value("${application.radarcovid.limit}")
-    private Integer codesLimit;
+
     private final DownloadedAccessCodeService downloadedAccessCodeService;
     private final SmsService smsService;
+    private final String external;
 
     public DownloadedAccessCodeController(final DownloadedAccessCodeService downloadedAccessCodeService,
-                                          final SmsService smsService) {
+                                          final SmsService smsService,@Value("${external.application.properties}") final String external) {
         this.downloadedAccessCodeService = downloadedAccessCodeService;
         this.smsService = smsService;
+        this.external = external;
     }
 
     @GetMapping(value = "")
@@ -52,8 +56,16 @@ public class DownloadedAccessCodeController {
     @Scheduled(cron = "${dp3t.ibcovid.codegen.tasks.delete-exposed-access-codes.cron}")
     public void executeGenerateCodes() throws SediaInvalidSignatureException {
         log.info("Inicia el proceso de Generacion de Codigos");
+        Integer codesLimit = 200;
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileInputStream(external));
+            codesLimit = Integer.parseInt(prop.getProperty("application.radarcovid.limit"));
+        } catch (IOException e) {
+            log.error("ERROR al recuperar el numero de maximo de codigos sin activar");
+        }
         final List<DownloadedAccessCodeSrvDto> downloadedAccessCodeList = this.downloadedAccessCodeService.getDownloadedAccessCodeList();
-        if(downloadedAccessCodeList.size() < this.codesLimit){
+        if(downloadedAccessCodeList.size() < codesLimit){
             downloadedAccessCodeService.generateCodes();
         }
         log.info("Finaliza el proceso de Generacion de Codigos");

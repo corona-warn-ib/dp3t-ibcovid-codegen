@@ -5,7 +5,7 @@
 # /app/caib/radarcov/
 external:
   application:
-    properties: "C:\\application.properties"
+    properties: "/app/caib/radarcov/application.properties"
 
 dp3t:
   ibcovid:
@@ -28,8 +28,6 @@ server:
 
 application:
   radarcovid:
-    size: 5
-    limit: 2
     sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}&idCampanya=APPCOVID"
     sms-text: "Su código para Radar Covid es %s."
     sms-user: "jorge.sanchezferreiro@plexus.es"
@@ -52,13 +50,6 @@ spring:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     username: "system"
     password: "oracle"
-
-keycloak:
-  url: "http://localhost:8080/auth/realms/webpre/protocol/openid-connect/token"
-  realm: "webpre"
-  clientId: "goib-ws"
-  clientSecret: "3962c60d-4cd6-48f8-b2f4-cf27ceadecdf"
-  grantType: "password"
 
 # Logging
 logging:

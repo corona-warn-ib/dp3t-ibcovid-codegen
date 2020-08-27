@@ -19,8 +19,6 @@ dp3t:
 
 application:
   radarcovid:
-    size: 400
-    limit: 200
     sms-url: "http://bitsms.fundaciobit.org/bitsms/MensajeEnviar?remitente=APPCOVID&numero={number}&texto={texto}&idCampanya=APPCOVID"
     sms-text: "Su código para Radar Covid es %s."
     sms-user: "jorge.sanchezferreiro@plexus.es"
